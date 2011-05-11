@@ -34,5 +34,13 @@ namespace SampleSiteModule
 
 			return 1;
 		}
+
+		public int UpdateFrom1()
+		{
+			ContentDefinitionManager.AlterTypeDefinition("Product",
+				cfg => cfg.WithPart("SynopsisPart"));
+
+			return 2;
+		}
 	}
 }
