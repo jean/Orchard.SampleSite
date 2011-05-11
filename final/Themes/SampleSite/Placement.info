@@ -20,5 +20,23 @@
 		</Match>
 	</Match>
 
+	<Match ContentType="Product">
+		<!-- In summary view, remove the body summary (we will replace with synopsis),
+			the meta data and the image gallery thumbnails -->
+		<Match DisplayType="Summary">
+			<Place Parts_Common_Body_Summary="-"/>
+			<Place Parts_Common_Metadata_Summary="-"/>
+			<Place Parts_ImageGallery="-"/>
+		</Match>
 
+		<!-- In detail view, remove the meda data, move the stars for ratings to the top
+		     put the image gallery below the content and define alternate wrappers for
+			 the image gallery and the body text -->
+		<Match DisplayType="Detail">
+			<Place Parts_Common_Metadata="-"/>
+			<Place Parts_Stars_Details="Content:0"/>
+			<Place Parts_ImageGallery="Content:2;Wrapper=Product_ImageGalleryWrapper"/>
+			<Place Parts_Common_Body="Content:1;Wrapper=Product_BodyTextWrapper"/>
+		</Match>
+	</Match>
 </Placement>

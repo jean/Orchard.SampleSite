@@ -19,6 +19,24 @@
     <References />
   </Dependency>
   <Dependency>
+    <ModuleName>Contrib.Voting</ModuleName>
+    <VirtualPath>~/Modules/Contrib.Voting/Contrib.Voting.csproj</VirtualPath>
+    <LoaderName>DynamicExtensionLoader</LoaderName>
+    <References />
+  </Dependency>
+  <Dependency>
+    <ModuleName>Contrib.Reviews</ModuleName>
+    <VirtualPath>~/Modules/Contrib.Reviews/Contrib.Reviews.csproj</VirtualPath>
+    <LoaderName>DynamicExtensionLoader</LoaderName>
+    <References>
+      <Reference>
+        <Name>Contrib.Voting</Name>
+        <LoaderName>DynamicExtensionLoader</LoaderName>
+        <VirtualPath>~/Modules/Contrib.Voting/Contrib.Voting.csproj</VirtualPath>
+      </Reference>
+    </References>
+  </Dependency>
+  <Dependency>
     <ModuleName>Dashboard</ModuleName>
     <VirtualPath>~/Core/Dashboard</VirtualPath>
     <LoaderName>CoreExtensionLoader</LoaderName>
@@ -35,6 +53,35 @@
     <VirtualPath>~/Core/HomePage</VirtualPath>
     <LoaderName>CoreExtensionLoader</LoaderName>
     <References />
+  </Dependency>
+  <Dependency>
+    <ModuleName>Orchard.Media</ModuleName>
+    <VirtualPath>~/Modules/Orchard.Media/Orchard.Media.csproj</VirtualPath>
+    <LoaderName>DynamicExtensionLoader</LoaderName>
+    <References>
+      <Reference>
+        <Name>ICSharpCode.SharpZipLib</Name>
+        <LoaderName>PrecompiledExtensionLoader</LoaderName>
+        <VirtualPath>~/Modules/Orchard.MediaPicker/bin/ICSharpCode.SharpZipLib.dll</VirtualPath>
+      </Reference>
+    </References>
+  </Dependency>
+  <Dependency>
+    <ModuleName>Mello.ImageGallery</ModuleName>
+    <VirtualPath>~/Modules/Mello.ImageGallery/Mello.ImageGallery.csproj</VirtualPath>
+    <LoaderName>DynamicExtensionLoader</LoaderName>
+    <References>
+      <Reference>
+        <Name>ICSharpCode.SharpZipLib</Name>
+        <LoaderName>PrecompiledExtensionLoader</LoaderName>
+        <VirtualPath>~/Modules/Orchard.MediaPicker/bin/ICSharpCode.SharpZipLib.dll</VirtualPath>
+      </Reference>
+      <Reference>
+        <Name>Orchard.Media</Name>
+        <LoaderName>DynamicExtensionLoader</LoaderName>
+        <VirtualPath>~/Modules/Orchard.Media/Orchard.Media.csproj</VirtualPath>
+      </Reference>
+    </References>
   </Dependency>
   <Dependency>
     <ModuleName>Navigation</ModuleName>
@@ -95,18 +142,6 @@
     <VirtualPath>~/Modules/Orchard.Lists/Orchard.Lists.csproj</VirtualPath>
     <LoaderName>DynamicExtensionLoader</LoaderName>
     <References />
-  </Dependency>
-  <Dependency>
-    <ModuleName>Orchard.Media</ModuleName>
-    <VirtualPath>~/Modules/Orchard.Media/Orchard.Media.csproj</VirtualPath>
-    <LoaderName>DynamicExtensionLoader</LoaderName>
-    <References>
-      <Reference>
-        <Name>ICSharpCode.SharpZipLib</Name>
-        <LoaderName>PrecompiledExtensionLoader</LoaderName>
-        <VirtualPath>~/Modules/Orchard.MediaPicker/bin/ICSharpCode.SharpZipLib.dll</VirtualPath>
-      </Reference>
-    </References>
   </Dependency>
   <Dependency>
     <ModuleName>Orchard.MediaPicker</ModuleName>
