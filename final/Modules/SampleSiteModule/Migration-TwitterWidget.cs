@@ -8,7 +8,7 @@ using SampleSiteModule.Models;
 namespace SampleSiteModule
 {
 	[OrchardFeature("TwitterWidget")]
-	public class Migrations : DataMigrationImpl
+	public class MigrationsTwitterWidget : DataMigrationImpl
 	{
 		public int Create()
 		{

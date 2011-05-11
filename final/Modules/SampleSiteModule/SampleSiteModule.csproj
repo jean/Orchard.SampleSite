@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migration-TwitterWidget.cs" />
+    <Compile Include="Migration-ProductTypes.cs" />
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="Drivers\TwitterWidgetDriver.cs">
       <SubType>Code</SubType>
