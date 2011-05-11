@@ -79,6 +79,12 @@
     <References />
   </Dependency>
   <Dependency>
+    <ModuleName>Orchard.ImportExport</ModuleName>
+    <VirtualPath>~/Modules/Orchard.ImportExport/Orchard.ImportExport.csproj</VirtualPath>
+    <LoaderName>DynamicExtensionLoader</LoaderName>
+    <References />
+  </Dependency>
+  <Dependency>
     <ModuleName>Orchard.jQuery</ModuleName>
     <VirtualPath>~/Modules/Orchard.jQuery/Orchard.jQuery.csproj</VirtualPath>
     <LoaderName>DynamicExtensionLoader</LoaderName>

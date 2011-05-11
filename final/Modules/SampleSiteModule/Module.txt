@@ -1,11 +1,12 @@
-Name: SampleSiteModule
+Name: Product Types
+Category: Sample Site
+Description: Content types for product list and main product page
+Dependencies: Contrib.Reviews, Mello.ImageGallery
 AntiForgery: enabled
 Author: Tony Johnson
 Website: http://www.deepcode.co.uk
 Version: 1.0
-OrchardVersion: 1.0
-Description: Provides widgets and features for sample site module which demonstrates creation of orchard site.
-Category: Sample Site
+OrchardVersion: 1.1
 Features:
     TwitterWidget:
 		Name: Twitter Widget
