@@ -1,0 +1,6 @@
+Name: Sample Site
+Author: Tony Johnson
+Website: http://www.deepcode.co.uk
+Description: Theme for orchard sample site illustrating how to develop your own themes and modules
+Version: 1.0
+Zones: Content,BodySideBar,BeforeBody,TriPanelLeft,TriPanelCenter,TriPanelRight,BasketArea

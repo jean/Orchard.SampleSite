@@ -1,0 +1,13 @@
+Name: SampleSiteModule
+AntiForgery: enabled
+Author: Tony Johnson
+Website: http://www.deepcode.co.uk
+Version: 1.0
+OrchardVersion: 1.0
+Description: Provides widgets and features for sample site module which demonstrates creation of orchard site.
+Category: Sample Site
+Features:
+    TwitterWidget:
+		Name: Twitter Widget
+		Category: Sample Site
+        Description: Widget for latest tweets

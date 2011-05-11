@@ -18,4 +18,4 @@ glob:*.Resharper.user
 glob:*.ReSharper.user
 glob:*.resharper.user
 glob:*/xaps/*.xap
-glob:*/App_Data/**
+glob:part-*/App_Data/**
