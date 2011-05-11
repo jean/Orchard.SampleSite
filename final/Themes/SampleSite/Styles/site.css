@@ -192,6 +192,17 @@ UL.content-items LI.last
 .message-Warning { background:#fdf5bc; /* yellow */ border:1px solid #ffea9b; }
 .critical.message, .validation-summary-errors, .message-Error { background:#e68585; /* red */ border:1px solid #990808; color:#fff; }
 
+.page UL
+{
+	margin: 10px 0px 10px 0px;
+	padding-left: 35px;
+}
+
+.page LI
+{
+	margin: 2px 0px 2px 0px;
+	list-style-type: disc;
+}
 
 #layout-footer-pad
 {

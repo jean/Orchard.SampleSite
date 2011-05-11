@@ -12,3 +12,7 @@ Features:
 		Name: Twitter Widget
 		Category: Sample Site
         Description: Widget for latest tweets
+	Synopsis:
+		Name: Synopsis
+		Category: Sample Site
+		Description: Allows synopsis to be added to types
