@@ -1,0 +1,6 @@
+Name: Sample Site
+Author: You
+Website: http://www.deepcode.co.uk
+Description: My sample site theme
+Version: 1.0
+Zones: Content,BodySideBar,BeforeBody,TriPanelLeft,TriPanelCenter,TriPanelRight,BasketArea
