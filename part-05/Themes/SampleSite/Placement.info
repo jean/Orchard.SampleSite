@@ -1,0 +1,23 @@
+<Placement>
+	<!-- Remove the page title from the homepage -->
+	<Match Path="~/">
+		<Place Parts_RoutableTitle="-"/>
+	</Match>
+
+	<!-- Remove metadata part from all pages and from blogs -->
+	<Match ContentType="Page">
+		<Place Parts_Common_Metadata="-"/>
+	</Match>
+	<Match ContentType="Blog">
+		<Place Parts_Common_Metadata="-"/>
+	</Match>
+
+	<!-- Remove comment counts from blog posts and set the summary blog post body alternate -->
+	<Match ContentType="BlogPost">
+		<Place Parts_Comments_Count="-"/>
+		<Match DisplayType="Summary">
+			<Place Parts_Common_Body_Summary="Content:5;Alternate=Parts_BlogPostSummaryBody"/>
+		</Match>
+	</Match>
+
+</Placement>
