@@ -1,0 +1,83 @@
+﻿@{
+	// Add the site CSS
+	Style.Include("site.css");
+	
+	// Determine which zones are going to be shown
+	var displayBasket = (Model.BasketArea != null);
+	var displayBodySideBar = (Model.BodySideBar != null);
+	var displayBeforeBody = (Model.BeforeBody != null);
+	var displayTriPanel = (Model.TriPanelLeft != null) || (Model.TriPanelCenter != null) || (Model.TriPanelRight != null);
+	var displayMessages = (Model.Messages != null);
+	var displayContent = !(WorkContext.Layout.IsHomepage == true);
+	
+	// Work out if we need to change the class of the main body area		
+	var bodyClasses = displayBodySideBar ? "" : "without-sidebar";
+	
+	// Adds user sign in, dashboard links etc to the bottom of the page
+	WorkContext.Layout.BottomDweller.Add(New.User(), "1");
+}
+
+<div id="layout-header">
+	<div id="layout-branding">
+		<a href="@Href("~/")" id="layout-branding-home"></a>
+		@if( displayBasket )
+		{
+		<div id="layout-basket-area">@Display(Model.BasketArea)</div>
+		}
+	</div>
+</div>
+
+<div id="layout-navigation">
+	@Display(Model.Navigation)
+</div>
+
+@if( displayMessages )
+{
+	<div id="layout-messages" class="zone">
+	@Display(Model.Messages)
+	</div>
+}
+
+@if (displayBeforeBody)
+{
+	<div id="layout-before-body" class="zone">
+		<div id="zone-before-body">
+			@Display(Model.BeforeBody)
+		</div>
+	</div>
+}
+
+@if (displayContent || displayBodySideBar)
+{
+	<div id="layout-body" class="zone">	
+		<div id="zone-body" class="@bodyClasses">
+			@Display(Model.Content)
+		</div>
+
+		@if (displayBodySideBar)
+		{
+			<div id="zone-body-sidebar">
+			@Display(Model.BodySideBar)
+			</div>
+		}
+	</div>	 
+}
+
+@if (displayTriPanel)
+{
+	<div id="layout-tripanel" class="zone">
+		<div id="zone-tripanel-left">
+		@Display(Model.TriPanelLeft)
+		</div>
+		<div id="zone-tripanel-center">
+		@Display(Model.TriPanelCenter)
+		</div>
+		<div id="zone-tripanel-right">
+		@Display(Model.TriPanelRight)
+		</div>
+	</div>
+}
+
+<div id="layout-footer-pad"></div>
+@Display(Model.AfterContent)
+@Display(Model.BottomDweller)

@@ -1,0 +1,13 @@
+Name: SampleSiteModule
+AntiForgery: enabled
+Author: You
+Website: http://www.deepcode.co.uk
+Version: 1.0
+OrchardVersion: 1.0
+Description: Provides widgets and features for the sample site module
+Category: Sample Site
+Features:
+    TwitterWidget:
+		Name: Twitter Widget
+		Category: Sample Site
+        Description: Widget for latest tweets
