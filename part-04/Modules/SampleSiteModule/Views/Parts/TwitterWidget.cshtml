@@ -1,0 +1,8 @@
+﻿@using SampleSiteModule.Models
+
+<ul>
+	@foreach (Tweet tweet in Model.Tweets)
+	{
+		<li>@tweet.DateStamp<br/>@tweet.Text<br/>@tweet.FriendlyDate</li>
+	}
+</ul>
