@@ -1,0 +1,9 @@
+@* This overrides how a routable title part is rendered in summary form *@
+
+@using Orchard.ContentManagement
+@{
+    ContentItem contentItem = Model.ContentPart.ContentItem;
+    string title = Model.Title.ToString();
+}
+
+<h4>@Html.ItemDisplayLink(title, contentItem)</h4>
