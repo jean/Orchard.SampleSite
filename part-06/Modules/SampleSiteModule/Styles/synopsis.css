@@ -1,0 +1,23 @@
+﻿DIV.synopsis-container
+{
+	float: left;
+	width: 100%;
+}
+DIV.synopsis-text
+{
+	margin-left: 160px;
+}
+DIV.synopsis-thumbnail
+{
+	float: left;
+	width: 150px;
+	margin-left: -100%;
+}
+DIV.synopsis-clear
+{
+	content: ".";
+	display: block;
+	height: 0px;
+	clear: both;
+	visibility: hidden;
+}
