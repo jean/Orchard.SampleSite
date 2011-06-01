@@ -1,0 +1,14 @@
+﻿@model SampleSiteModule.Models.RelatedContentWidgetPart
+
+<fieldset>
+	<legend>Related Content</legend>
+	<div class="editor-label">@T("Tags to find (comma separated)"):</div>
+	<div class="editor-field">
+		@Html.TextBoxFor( m => m.TagList )
+	</div>
+	<div class="editor-label">@T("Number of items to find"):</div>
+	<div class="editor-field">
+		@Html.TextBoxFor(m => m.MaxItems)
+		@Html.ValidationMessageFor(m => m.MaxItems)
+	</div>
+</fieldset>
