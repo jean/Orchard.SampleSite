@@ -1,0 +1,14 @@
+﻿<Placement>
+	<Place Parts_TwitterWidget="Content:1"/>
+	<Place Parts_TwitterWidget_Edit="Content:7.5"/>
+
+  <Place Parts_RelatedContentWidget="Content:1"/>
+  <Place Parts_RelatedContentWidget_Edit="Content:7.5"/>
+  
+  <!-- Synopsis -->
+  <!-- Note the summary view is the only display mode... -->
+  <Match DisplayType="Summary">
+    <Place Parts_Synopsis="Content:10"/>
+  </Match>
+  <Place Parts_Synopsis_Edit="Content:8"/>
+</Placement>
