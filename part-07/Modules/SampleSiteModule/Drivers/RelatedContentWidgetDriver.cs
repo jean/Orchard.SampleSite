@@ -31,27 +31,57 @@ namespace SampleSiteModule.Drivers
 		{
             // Convert CSV tags to list
             List<string> tags = new List<string>();
-            Array.ForEach( part.TagList.Split(','), t =>
-            {
-                if (!String.IsNullOrWhiteSpace(t))
-                {
-                    t = t.Trim();
-                    if (!tags.Contains(t))
-                        tags.Add(t);
-                }
-            });
+			if (!String.IsNullOrWhiteSpace(part.TagList))
+			{
+				Array.ForEach(part.TagList.Split(','), t =>
+				{
+					if (!String.IsNullOrWhiteSpace(t))
+					{
+						t = t.Trim();
+						if (!tags.Contains(t))
+							tags.Add(t);
+					}
+				});
+			}
+
+			// If we have no tags.....
+			if (tags.Count < 1)
+			{
+				return ContentShape("Parts_RelatedContentWidget",
+					() => shapeHelper.Parts_RelatedContentWidget(
+							ContentItems: shapeHelper.List()
+							));
+			}
 
 			// See if we can find the current page/content id to filter it out
 			// from the related content if necessary.
-			int currentItemId = TryGetCurrentContentId(-1);
+			int currentItemId = -1;
+			if( part.ExcludeCurrentItemIfMatching )
+				currentItemId = TryGetCurrentContentId(-1);
 
-			// Query all tag parts containing one of our tag names,
-			// order it by published date descending taking MaxItems
-			IEnumerable<TagsPart> parts = _cms.Query<TagsPart, TagsPartRecord>()
-				.Where(tpr => tpr.Tags.Any(t => tags.Contains(t.TagRecord.TagName)))
-				.Join<CommonPartRecord>()			
-				.Where( cpr => cpr.Id != currentItemId )
-				.OrderByDescending( cpr => cpr.PublishedUtc )
+			// Setup a query on the tags part
+			IContentQuery<TagsPart, TagsPartRecord> query = _cms.Query<TagsPart, TagsPartRecord>();
+
+			if (part.MustHaveAllTags)
+			{
+				// Add where conditions for every tag specified
+				foreach (string tag in tags)
+				{
+					string tag1 = tag; // Prevent access to modified closure
+					query.Where(tpr => tpr.Tags.Any(t => t.TagRecord.TagName == tag1));
+				}
+			}
+			else
+			{
+				// Add where condition for any tag specified
+				query.Where(tpr => tpr.Tags.Any(t => tags.Contains(t.TagRecord.TagName)));
+			}
+			
+			// Finish the query (exclude current, do ordering and slice max items) and execute
+			IEnumerable<TagsPart> parts = 
+				query.Join<CommonPartRecord>()
+				.Where(cpr => cpr.Id != currentItemId)
+				.OrderByDescending(cpr => cpr.PublishedUtc)
 				.Slice(part.MaxItems);
 
 			// Create a list and push our display content items in
@@ -60,10 +90,17 @@ namespace SampleSiteModule.Drivers
 
 			return ContentShape("Parts_RelatedContentWidget",
 				() => shapeHelper.Parts_RelatedContentWidget(
+						ShowListOnly : part.ShowListOnly,
                         ContentItems : list
                         ));
 		}
 
+		/// <summary>
+		/// Helper that will attempt to work out the current content id from the url
+		/// of the request.
+		/// </summary>
+		/// <param name="defaultIfNotFound"></param>
+		/// <returns></returns>
 		private int TryGetCurrentContentId(int defaultIfNotFound)
 		{
 			string urlPath = _work.GetContext().HttpContext.Request.AppRelativeCurrentExecutionFilePath.Substring(2);
