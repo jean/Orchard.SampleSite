@@ -4,7 +4,8 @@ using System.Linq;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.Data;
+using Orchard.Core.Common.Models;
+using Orchard.Core.Routable.Models;
 using Orchard.Environment.Extensions;
 using Orchard.Tags.Models;
 using SampleSiteModule.Models;
@@ -17,18 +18,16 @@ namespace SampleSiteModule.Drivers
 	[OrchardFeature("RelatedContent")]
 	public class RelatedContentWidgetDriver : ContentPartDriver<RelatedContentWidgetPart>
 	{
-        private readonly IRepository<TagRecord> _tagRepository;
-        private readonly IRepository<ContentTagRecord> _contentTagRepository;
-        private readonly IOrchardServices _orchard;
+		private readonly IContentManager _cms;
+		private readonly IWorkContextAccessor _work;
 
-        public RelatedContentWidgetDriver(IRepository<TagRecord> tagRepository, IRepository<ContentTagRecord> contentTagRepository, IOrchardServices orchard)
+		public RelatedContentWidgetDriver(IContentManager cms, IWorkContextAccessor work)
         {
-            _tagRepository = tagRepository;
-            _contentTagRepository = contentTagRepository;
-            _orchard = orchard;
+        	_cms = cms;
+			_work = work;
         }
 
-	    protected override DriverResult Display(RelatedContentWidgetPart part, string displayType, dynamic shapeHelper)
+		protected override DriverResult Display(RelatedContentWidgetPart part, string displayType, dynamic shapeHelper)
 		{
             // Convert CSV tags to list
             List<string> tags = new List<string>();
@@ -41,28 +40,42 @@ namespace SampleSiteModule.Drivers
                         tags.Add(t);
                 }
             });
-            
-            // Get all of the tags we're interested in
-            IQueryable<TagRecord> query = _tagRepository.Table.Where(t => tags.Contains(t.TagName));
-            IList<int> matches = query.Select(t => t.Id).ToList();
 
-            // Get a normed list of content items with tags
-            // TODO: We should probably get a distinct list of TagsPartRecord.Id instead and take the top x of that
-            // TODO: and then load that from the content manager.
-            // TODO: should order by date descending
-            IEnumerable<ContentItem> items = _contentTagRepository.Fetch(x => matches.Contains(x.TagRecord.Id))
-                .Select(t => _orchard.ContentManager.Get(t.TagsPartRecord.Id, VersionOptions.Published))
-                .Where(c => c != null)
-                .Distinct().Take(5);
+			// See if we can find the current page/content id to filter it out
+			// from the related content if necessary.
+			int currentItemId = TryGetCurrentContentId(-1);
 
-            // Create a list and add our items in
-            var list = shapeHelper.List();
-            list.AddRange(items.Select( bp => _orchard.ContentManager.BuildDisplay(bp, "Summary")));
+			// Query all tag parts containing one of our tag names,
+			// order it by published date descending taking MaxItems
+			IEnumerable<TagsPart> parts = _cms.Query<TagsPart, TagsPartRecord>()
+				.Where(tpr => tpr.Tags.Any(t => tags.Contains(t.TagRecord.TagName)))
+				.Join<CommonPartRecord>()			
+				.Where( cpr => cpr.Id != currentItemId )
+				.OrderByDescending( cpr => cpr.PublishedUtc )
+				.Slice(part.MaxItems);
+
+			// Create a list and push our display content items in
+			var list = shapeHelper.List();
+			list.AddRange(parts.Select(p => _cms.BuildDisplay(p, "Summary")));
 
 			return ContentShape("Parts_RelatedContentWidget",
 				() => shapeHelper.Parts_RelatedContentWidget(
                         ContentItems : list
                         ));
+		}
+
+		private int TryGetCurrentContentId(int defaultIfNotFound)
+		{
+			string urlPath = _work.GetContext().HttpContext.Request.AppRelativeCurrentExecutionFilePath.Substring(2);
+
+			var routableHit = _cms
+				.Query<RoutePart, RoutePartRecord>(VersionOptions.Published)
+				.Where(r => r.Path == urlPath)
+				.Slice(1).FirstOrDefault();
+
+			if (routableHit != null) return routableHit.Id;
+
+			return defaultIfNotFound;
 		}
 
 		protected override DriverResult Editor(RelatedContentWidgetPart part, dynamic shapeHelper)
