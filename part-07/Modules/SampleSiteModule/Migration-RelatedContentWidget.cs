@@ -35,5 +35,24 @@ namespace SampleSiteModule
 
 			return 1;
 		}
+
+		public int UpdateFrom1()
+		{
+			SchemaBuilder.AlterTable("RelatedContentWidgetRecord",
+				table => table.AddColumn("ExcludeCurrentItemIfMatching", DbType.Boolean));
+
+			SchemaBuilder.AlterTable("RelatedContentWidgetRecord",
+				table => table.AddColumn("MustHaveAllTags", DbType.Boolean));
+
+			return 2;
+		}
+
+		public int UpdateFrom2()
+		{
+			SchemaBuilder.AlterTable("RelatedContentWidgetRecord",
+				table => table.AddColumn("ShowListOnly", DbType.Boolean));
+
+			return 3;
+		}
 	}
 }

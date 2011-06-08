@@ -12,7 +12,14 @@ else {
         string title = item.Title;
         ContentItem contentItem = item.ContentItem;
         <li class="content-item-summary">
-            @Html.ItemDisplayLink(title, contentItem)
+		@if( Model.ShowListOnly )
+		{
+			@Html.ItemDisplayLink(title, contentItem)
+		}
+		else
+		{
+			@Display(item)
+		}
         </li>
     }
     </ul>
