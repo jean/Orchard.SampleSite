@@ -29,21 +29,13 @@ namespace SampleSiteModule.Drivers
 
 		protected override DriverResult Display(RelatedContentWidgetPart part, string displayType, dynamic shapeHelper)
 		{
-            // Convert CSV tags to list
-            List<string> tags = new List<string>();
-			if (!String.IsNullOrWhiteSpace(part.TagList))
-			{
-				Array.ForEach(part.TagList.Split(','), t =>
-				{
-					if (!String.IsNullOrWhiteSpace(t))
-					{
-						t = t.Trim();
-						if (!tags.Contains(t))
-							tags.Add(t);
-					}
-				});
-			}
-
+			List<string> tags = part.TagList
+				.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(s => s.Trim())
+				.Where(s => !String.IsNullOrEmpty(s))
+				.Distinct()
+				.ToList();
+            
 			// If we have no tags.....
 			if (tags.Count < 1)
 			{
